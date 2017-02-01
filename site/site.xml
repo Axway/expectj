@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<project>
+  <version position="left"/>
+  <body>
+    <links>
+      <item name="Sourceforge Project" href="http://sourceforge.net/projects/expectj"/>
+    </links>
+
+    <menu name="ExpectJ">
+      <item name="Introduction" href="index.html"/>
+      <item name="Changelog" href="http://expectj.bzr.sourceforge.net/bzr/expectj/trunk/changes"/>
+      <item name="Javadoc" href="apidocs/index.html"/>
+      <item name="Source cross reference" href="xref/index.html"/>
+      <item name="Sourceforge Project" href="http://sourceforge.net/projects/expectj"/>
+    </menu>
+
+    <menu ref="reports"/>
+  </body>
+</project>
