@@ -1,18 +1,3 @@
-/*
- * Copyright 2017 Axway Software
- * 
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- * 
- * http://www.apache.org/licenses/LICENSE-2.0
- * 
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 package com.axway.ats.expectj;
 
 import java.io.BufferedWriter;
@@ -334,7 +319,7 @@ public class Spawn {
                                                 + selector.keys().size() );
         }
         // If this cast fails somebody gave us the wrong selector.
-        Pipe.SourceChannel readMe = ( Pipe.SourceChannel ) ( ( SelectionKey ) ( selector.keys().iterator().next() ) ).channel();
+        Pipe.SourceChannel readMe = ( Pipe.SourceChannel ) ( selector.keys().iterator().next() ).channel();
 
         // tell user our expectations
         LOG.info( "Expecting to match the following " + ( isRegex
@@ -537,7 +522,7 @@ public class Spawn {
         Selector selector = stdoutSelector;
 
         // If this cast fails somebody gave us the wrong selector.
-        Pipe.SourceChannel readMe = ( Pipe.SourceChannel ) ( ( SelectionKey ) ( selector.keys().iterator().next() ) ).channel();
+        Pipe.SourceChannel readMe = ( Pipe.SourceChannel ) ( selector.keys().iterator().next() ).channel();
 
         // tell user our expectations
         StringBuilder msg = new StringBuilder();
@@ -599,7 +584,7 @@ public class Spawn {
         Selector selector = stdoutSelector;
 
         // If this cast fails somebody gave us the wrong selector.
-        Pipe.SourceChannel readMe = ( Pipe.SourceChannel ) ( ( SelectionKey ) ( selector.keys().iterator().next() ) ).channel();
+        Pipe.SourceChannel readMe = ( Pipe.SourceChannel ) ( selector.keys().iterator().next() ).channel();
 
         // tell user our expectations
         StringBuilder msg = new StringBuilder();
@@ -800,7 +785,7 @@ public class Spawn {
         Selector selector = stdoutSelector;
 
         // If this cast fails somebody gave us the wrong selector.
-        Pipe.SourceChannel readMe = ( Pipe.SourceChannel ) ( ( SelectionKey ) ( selector.keys().iterator().next() ) ).channel();
+        Pipe.SourceChannel readMe = ( Pipe.SourceChannel ) ( selector.keys().iterator().next() ).channel();
 
         final Date endTime = new Date( new Date().getTime() + readTimeSeconds * 1000 );
 
