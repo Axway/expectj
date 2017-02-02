@@ -1,4 +1,19 @@
-package expectj;
+/*
+ * Copyright 2017 Axway Software
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package com.axway.ats.expectj;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -9,8 +24,7 @@ import java.io.OutputStream;
  *
  * @author Johan Walles
  */
-public interface Spawnable
-{
+public interface Spawnable {
     /**
      * This method launches the {@link Spawn}.  It starts the
      * {@link StreamPiper}s that enable copying of process stream contents to
@@ -62,13 +76,16 @@ public interface Spawnable
      */
     public void stop();
 
+    public Object getSystemObject();
+
     /**
      * Register a listener that will be called when this spawnable closes.
      *
      * @param closeListener The listener that will be notified when this
      * spawnable closes.
      */
-    public void setCloseListener(CloseListener closeListener);
+    public void setCloseListener(
+                                  CloseListener closeListener );
 
     /**
      * Will be notified when a {@link Spawnable} closes.

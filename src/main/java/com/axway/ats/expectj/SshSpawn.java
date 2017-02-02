@@ -1,4 +1,19 @@
-package expectj;
+/*
+ * Copyright 2017 Axway Software
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package com.axway.ats.expectj;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -15,17 +30,17 @@ public class SshSpawn extends AbstractSpawnable implements Spawnable {
     /**
      * A reference to the remote host.
      */
-    private String m_remoteHost;
+    private String       m_remoteHost;
 
     /**
      * The port we're talking to on the remote host.
      */
-    private int m_remotePort;
+    private int          m_remotePort;
 
     /**
      * Our communications channel to the remote host.
      */
-    private Session m_session = null ;
+    private Session      m_session  = null;
 
     /**
      * Use this to read data from the remote host.
@@ -35,22 +50,22 @@ public class SshSpawn extends AbstractSpawnable implements Spawnable {
     /**
      * Use this to write data to the remote host.
      */
-    private InputStream m_toSocket;
+    private InputStream  m_toSocket;
 
     /**
      * The username with which to authenticate
      */
-    private String m_username = null ;
+    private String       m_username = null;
 
     /**
      * The password with which to authenticate
      */
-    private String m_password = null ;
+    private String       m_password = null;
 
     /**
      * The JSch Channel of type "shell"
      */
-    private Channel m_channel = null ;
+    private Channel      m_channel  = null;
 
     /**
      * Construct a new SSH spawn.
@@ -59,11 +74,15 @@ public class SshSpawn extends AbstractSpawnable implements Spawnable {
      * @param username The user name with which to authenticate
      * @param password The password with which to authenticate
      */
-    public SshSpawn(String remoteHostName, int remotePort, String username, String password) {
+    public SshSpawn( String remoteHostName,
+                     int remotePort,
+                     String username,
+                     String password ) {
+
         m_remotePort = remotePort;
-        m_remoteHost = remoteHostName ;
-        this.m_username = username ;
-        this.m_password = password ;
+        m_remoteHost = remoteHostName;
+        this.m_username = username;
+        this.m_password = password;
     }
 
     /**
@@ -74,12 +93,13 @@ public class SshSpawn extends AbstractSpawnable implements Spawnable {
      *
      * @throws IOException If connecting the channel fails.
      */
-    public SshSpawn(Channel channel) throws IOException {
-        if (!channel.isConnected()) {
+    public SshSpawn( Channel channel ) throws IOException {
+
+        if( !channel.isConnected() ) {
             try {
                 channel.connect();
-            } catch (JSchException e) {
-                throw new IOException("Failed connecting the channel", e) ;
+            } catch( JSchException e ) {
+                throw new IOException( "Failed connecting the channel", e );
             }
         }
 
@@ -89,42 +109,47 @@ public class SshSpawn extends AbstractSpawnable implements Spawnable {
     }
 
     public void start() throws IOException {
-        if (m_toSocket != null) {
+
+        if( m_toSocket != null ) {
             // We've probably been created by the SshSpawn(Channel) constructor,
             // or start() has already been called.  No need to do anything
             // anyway.
             return;
         }
 
-    	try {
-			m_session = new JSch().getSession(m_username, m_remoteHost, m_remotePort) ;
-			m_session.setPassword(m_password) ;
-			m_session.setConfig("StrictHostKeyChecking", "no");
-			m_session.connect() ;
-			m_channel = m_session.openChannel("shell") ;
-			m_channel.connect() ;
-		} catch (JSchException e) {
-			throw new IOException("Unable to establish SSH session/channel", e) ;
-		}
-        m_toSocket = m_channel.getInputStream() ;
+        try {
+            m_session = new JSch().getSession( m_username, m_remoteHost, m_remotePort );
+            m_session.setPassword( m_password );
+            m_session.setConfig( "StrictHostKeyChecking", "no" );
+            m_session.connect();
+            m_channel = m_session.openChannel( "shell" );
+            m_channel.connect();
+        } catch( JSchException e ) {
+            throw new IOException( "Unable to establish SSH session/channel", e );
+        }
+        m_toSocket = m_channel.getInputStream();
         m_fromSocket = m_channel.getOutputStream();
     }
 
     public InputStream getStdout() {
+
         return m_toSocket;
     }
 
     public OutputStream getStdin() {
+
         return m_fromSocket;
     }
 
     public InputStream getStderr() {
+
         return null;
     }
 
     public boolean isClosed() {
-        if (m_channel != null) {
-            if (m_channel.isClosed()) {
+
+        if( m_channel != null ) {
+            if( m_channel.isClosed() ) {
                 // We've been disconnected, shut down
                 stop();
             }
@@ -133,22 +158,29 @@ public class SshSpawn extends AbstractSpawnable implements Spawnable {
     }
 
     public int getExitValue() {
+
         return 0;
     }
 
     public void stop() {
-        if (m_channel == null) {
+
+        if( m_channel == null ) {
             return;
         }
 
         m_channel.disconnect();
-		m_channel = null;
+        m_channel = null;
 
-		if (m_session != null) {
-		    m_session.disconnect();
-		    m_session = null;
-		}
+        if( m_session != null ) {
+            m_session.disconnect();
+            m_session = null;
+        }
         m_toSocket = null;
         m_fromSocket = null;
+    }
+
+    public Object getSystemObject() {
+
+        return null;
     }
 }

@@ -1,5 +1,19 @@
-package expectj;
-
+/*
+ * Copyright 2017 Axway Software
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package com.axway.ats.expectj;
 
 /**
  * This class acts like a timer and invokes the listener on time-out.
@@ -9,47 +23,47 @@ class Timer implements Runnable {
      * The time interval in milliseconds up to which the process
      * should be allowed to run.
      */
-    private long timeOut = 0;
+    private long               timeOut       = 0;
 
     /**
      * The entity that wants to be notified on timeout.
      */
-    private TimerEventListener listener = null;
+    private TimerEventListener listener      = null;
 
     /**
      * The waiting thread.
      */
-    private Thread thread = null;
+    private Thread             thread        = null;
 
     /**
      * Timer not started.
      */
-    public static final int NOT_STARTED = 0;
+    public static final int    NOT_STARTED   = 0;
 
     /**
      * Timer started and still running.
      */
-    public static final int STARTED     = 1;
+    public static final int    STARTED       = 1;
 
     /**
      * Timer timed out.
      */
-    public static final int TIMEDOUT    = 2;
+    public static final int    TIMEDOUT      = 2;
 
     /**
      * Timer interrupted.
      */
-    public static final int INTERRUPTED = 3;
+    public static final int    INTERRUPTED   = 3;
 
     /**
      * Stores the current status of Timer
      */
-    private int currentStatus = NOT_STARTED;
+    private int                currentStatus = NOT_STARTED;
 
     /**
      * Are we there yet?
      */
-    private boolean done = false;
+    private boolean            done          = false;
 
     /**
      * Constructor
@@ -59,24 +73,26 @@ class Timer implements Runnable {
      * @param listener Object implementing the TimerEventListener
      *                 interface
      */
-    public Timer(long timeOut, TimerEventListener listener) {
+    public Timer( long timeOut,
+                  TimerEventListener listener ) {
 
-        if (timeOut < 1) {
-            throw new IllegalArgumentException("Time-Out value cannot be < 1");
+        if( timeOut < 1 ) {
+            throw new IllegalArgumentException( "Time-Out value cannot be < 1" );
         }
-        if (listener == null ) {
-            throw new IllegalArgumentException("Listener cannot be null");
+        if( listener == null ) {
+            throw new IllegalArgumentException( "Listener cannot be null" );
         }
         this.timeOut = timeOut * 1000;
         this.listener = listener;
 
-     }
+    }
 
     /**
      * Starts the timer
      */
     public void startTimer() {
-        thread = new Thread(this, "ExpectJ Timer Thread, " + timeOut + "ms");
+
+        thread = new Thread( this, "ExpectJ Timer Thread, " + timeOut + "ms" );
         currentStatus = STARTED;
         thread.start();
     }
@@ -88,6 +104,7 @@ class Timer implements Runnable {
      * @return the status of the timer
      */
     public int getStatus() {
+
         return currentStatus;
     }
 
@@ -96,7 +113,8 @@ class Timer implements Runnable {
      * notifications.
      */
     public void close() {
-        synchronized (this) {
+
+        synchronized( this ) {
             done = true;
             this.notify();
         }
@@ -106,11 +124,12 @@ class Timer implements Runnable {
      * This is the timer thread main.
      */
     public void run() {
+
         try {
             // Sleep for the specified time
-            synchronized (this) {
-                this.wait(timeOut);
-                if (done) {
+            synchronized( this ) {
+                this.wait( timeOut );
+                if( done ) {
                     // We've been nicely asked to quit
                     return;
                 }
@@ -119,9 +138,9 @@ class Timer implements Runnable {
                 currentStatus = TIMEDOUT;
                 listener.timerTimedOut();
             }
-        } catch (InterruptedException iexp) {
+        } catch( InterruptedException iexp ) {
             currentStatus = INTERRUPTED;
-            listener.timerInterrupted(iexp);
+            listener.timerInterrupted( iexp );
         }
     }
 }

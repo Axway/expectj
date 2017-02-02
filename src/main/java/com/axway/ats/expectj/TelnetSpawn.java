@@ -1,4 +1,19 @@
-package expectj;
+/*
+ * Copyright 2017 Axway Software
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package com.axway.ats.expectj;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -15,22 +30,22 @@ class TelnetSpawn extends AbstractSpawnable implements Spawnable {
     /**
      * A reference to the remote host.
      */
-    private InetAddress m_remoteHost;
+    private InetAddress  m_remoteHost;
 
     /**
      * The port we're talking to on the remote host.
      */
-    private int m_remotePort;
+    private int          m_remotePort;
 
     /**
      * Our communications channel to the remote host.
      */
-    private Socket m_socket;
+    private Socket       m_socket;
 
     /**
      * Use this to read data from the remote host.
      */
-    private InputStream m_fromSocket;
+    private InputStream  m_fromSocket;
 
     /**
      * Use this to write data to the remote host.
@@ -43,32 +58,39 @@ class TelnetSpawn extends AbstractSpawnable implements Spawnable {
      * @param remotePort The remote port to connect to.
      * @throws UnknownHostException If the name of the remote host cannot be looked up
      */
-    public TelnetSpawn(String remoteHostName, int remotePort) throws UnknownHostException {
+    public TelnetSpawn( String remoteHostName,
+                        int remotePort ) throws UnknownHostException {
+
         m_remotePort = remotePort;
-        m_remoteHost = InetAddress.getByName(remoteHostName);
+        m_remoteHost = InetAddress.getByName( remoteHostName );
     }
 
     public void start() throws IOException {
-        m_socket = new Socket(m_remoteHost, m_remotePort);
+
+        m_socket = new Socket( m_remoteHost, m_remotePort );
         m_fromSocket = m_socket.getInputStream();
         m_toSocket = m_socket.getOutputStream();
     }
 
     public InputStream getStdout() {
+
         return m_fromSocket;
     }
 
     public OutputStream getStdin() {
+
         return m_toSocket;
     }
 
     public InputStream getStderr() {
+
         return null;
     }
 
     public boolean isClosed() {
-        if (m_socket != null) {
-            if (m_socket.isClosed()) {
+
+        if( m_socket != null ) {
+            if( m_socket.isClosed() ) {
                 // We've been disconnected, shut down
                 stop();
             }
@@ -77,21 +99,28 @@ class TelnetSpawn extends AbstractSpawnable implements Spawnable {
     }
 
     public int getExitValue() {
+
         return 0;
     }
 
     public void stop() {
-        if (m_socket == null) {
+
+        if( m_socket == null ) {
             return;
         }
 
         try {
             m_socket.close();
-        } catch (IOException ignored) {
+        } catch( IOException ignored ) {
             // Failure: When your best just isn't good enough.
         }
         m_socket = null;
         m_fromSocket = null;
         m_toSocket = null;
+    }
+
+    public Object getSystemObject() {
+
+        return null;
     }
 }

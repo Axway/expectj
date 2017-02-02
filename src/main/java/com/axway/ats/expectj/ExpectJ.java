@@ -1,15 +1,32 @@
-package expectj;
+/*
+ * Copyright 2017 Axway Software
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package com.axway.ats.expectj;
 
 import java.io.IOException;
 import java.net.UnknownHostException;
+import java.util.Arrays;
 
+import com.axway.ats.expectj.utils.AtsUtils;
 import com.jcraft.jsch.Channel;
 
 /**
  * This class is the starting point of the ExpectJ Utility. This class
  * acts as factory for all {@link Spawn}s.
  *
- * @author	Sachin Shekar Shetty
+ * @author  Sachin Shekar Shetty
  */
 public class ExpectJ {
     /** Default timeout, -1 indicating wait for indefinite time */
@@ -21,7 +38,8 @@ public class ExpectJ {
      * commands on the spawned process.  -1 default time out indicates
      * indefinite timeout.
      */
-    public ExpectJ(long defaultTimeoutSeconds) {
+    public ExpectJ( long defaultTimeoutSeconds ) {
+
         m_lDefaultTimeOutSeconds = defaultTimeoutSeconds;
     }
 
@@ -29,6 +47,7 @@ public class ExpectJ {
      * Create a new ExpectJ with an infinite timeout.
      */
     public ExpectJ() {
+
         // This constructor intentionally left blank
     }
 
@@ -40,8 +59,9 @@ public class ExpectJ {
      * @return The newly spawned process
      * @throws IOException if the spawning fails
      */
-    public Spawn spawn(Spawnable spawnable) throws IOException {
-        return new Spawn(spawnable, m_lDefaultTimeOutSeconds);
+    public Spawn spawn( Spawnable spawnable ) throws IOException {
+
+        return new Spawn( spawnable, m_lDefaultTimeOutSeconds );
     }
 
     /**
@@ -53,16 +73,19 @@ public class ExpectJ {
      * @throws IOException if the process spawning fails
      * @see Runtime#exec(String)
      */
-    public Spawn spawn(final String command) throws IOException {
-        return spawn(new ProcessSpawn(new Executor() {
+    public Spawn spawn( final String command ) throws IOException {
+
+        return spawn( new ProcessSpawn( new Executor() {
             public Process execute() throws IOException {
-                return Runtime.getRuntime().exec(command);
+
+                return new ProcessBuilder( Arrays.asList( AtsUtils.parseCommandLineArguments( command ) ) ).start();
             }
 
             public String toString() {
+
                 return command;
             }
-        }));
+        } ) );
     }
 
     /**
@@ -74,9 +97,9 @@ public class ExpectJ {
      * @throws IOException if the process spawning fails
      * @see Runtime#exec(String[])
      */
-    public Spawn spawn(Executor executor) throws IOException
-    {
-        return spawn(new ProcessSpawn(executor));
+    public Spawn spawn( Executor executor ) throws IOException {
+
+        return spawn( new ProcessSpawn( executor ) );
     }
 
     /**
@@ -94,10 +117,9 @@ public class ExpectJ {
      * @see #spawn(String, int, String, String)
      * @see #spawn(Channel)
      */
-    public Spawn spawn(String hostName, int port)
-    throws IOException
-    {
-        return spawn(new TelnetSpawn(hostName, port));
+    public Spawn spawn( String hostName, int port ) throws IOException {
+
+        return spawn( new TelnetSpawn( hostName, port ) );
     }
 
     /**
@@ -113,8 +135,9 @@ public class ExpectJ {
      *
      * @see SshSpawn#SshSpawn(Channel)
      */
-    public Spawn spawn(Channel channel) throws IOException {
-        return spawn(new SshSpawn(channel));
+    public Spawn spawn( Channel channel ) throws IOException {
+
+        return spawn( new SshSpawn( channel ) );
     }
 
     /**
@@ -136,7 +159,9 @@ public class ExpectJ {
      *
      * @see SshSpawn#SshSpawn(String, int, String, String)
      */
-    public Spawn spawn(String remoteHostName, int remotePort, String userName, String password) throws IOException {
-        return spawn(new SshSpawn(remoteHostName, remotePort, userName, password));
+    public Spawn spawn( String remoteHostName, int remotePort, String userName,
+                        String password ) throws IOException {
+
+        return spawn( new SshSpawn( remoteHostName, remotePort, userName, password ) );
     }
 }
