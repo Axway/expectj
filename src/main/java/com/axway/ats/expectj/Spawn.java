@@ -153,6 +153,7 @@ public class Spawn {
     /**
      * Wait for a pattern to appear on standard out.
      * @param pattern The case-insensitive substring to match against.
+     * @param isRegex weather the pattern is regular expression or plain text.
      * @param timeOutSeconds The timeout in seconds before the match fails.
      * @throws IOException on IO trouble waiting for pattern
      * @throws TimeoutException on timeout waiting for pattern
@@ -299,6 +300,7 @@ public class Spawn {
      * Workhorse of the expect() and expectErr() methods.
      * @see #expect(String, long)
      * @param pattern What to look for
+     * @param isRegex weather the pattern is regular expression or plain text
      * @param lTimeOutSeconds How long to look before giving up
      * @param selector A selector covering only the channel we should read from
      * @throws IOException on IO trouble waiting for pattern
@@ -374,8 +376,9 @@ public class Spawn {
 
     /**
      * Wait for a pattern to appear on standard error.
-     * @see #expect(String, long)
+     * @see #expect(String, boolean, long)
      * @param pattern The case-insensitive substring to match against.
+     * @param isRegex weather the pattern is regular expression or plain text.
      * @param timeOutSeconds The timeout in seconds before the match fails.
      * @throws TimeoutException on timeout waiting for pattern
      * @throws IOException on IO trouble waiting for pattern
@@ -391,6 +394,7 @@ public class Spawn {
     /**
      * Wait for a pattern to appear on standard out.
      * @param pattern The case-insensitive substring to match against.
+     * @param isRegex weather the pattern is regular expression or plain text.
      * @throws TimeoutException on timeout waiting for pattern
      * @throws IOException on IO trouble waiting for pattern
      */
@@ -404,9 +408,10 @@ public class Spawn {
     /**
      * Wait for a pattern to appear on standard error.
      * @param pattern The case-insensitive substring to match against.
+     * @param isRegex weather the pattern is regular expression or plain text.
      * @throws TimeoutException on timeout waiting for pattern
      * @throws IOException on IO trouble waiting for pattern
-     * @see #expect(String)
+     * @see #expect(String, boolean)
      */
     public void expectErr(
                            String pattern,

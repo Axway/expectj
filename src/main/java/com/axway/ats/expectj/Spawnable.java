@@ -5,7 +5,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 /**
- * Implementors of this interface can be spawned by {@link expectj.ExpectJ}.
+ * Implementors of this interface can be spawned by {@link com.axway.ats.expectj.ExpectJ}.
  *
  * @author Johan Walles
  */
