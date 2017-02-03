@@ -32,6 +32,12 @@
 			<artifactId>jsch</artifactId>
 			<version>${com.jcraft.jsch.version}</version>
 		</dependency>
-
 	</dependencies>
+
+	<scm>
+		<connection>scm:git:https://github.com/Axway/expectj.git</connection>
+		<developerConnection>scm:git:git@github.com:Axway/expectj.git</developerConnection>
+		<url>https://github.com/Axway/expectj</url>
+	</scm>
+
 </project>
