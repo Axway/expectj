@@ -1,7 +1,7 @@
 language: java
 jdk:
     oraclejdk8
-install: mvn clean install
+install: mvn clean install --settings="settings.xml"
 script: 
-- mvn verify
-- mvn clean deploy
+- mvn verify --settings="settings.xml"
+- mvn clean deploy --settings="settings.xml"
