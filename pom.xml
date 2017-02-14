@@ -25,7 +25,6 @@
 		<com.jcraft.jsch.version>0.1.50</com.jcraft.jsch.version>
 		<org.apache.maven.plugins.maven.source.plugin.version>2.2.1</org.apache.maven.plugins.maven.source.plugin.version>
 		<org.apache.maven.plugins.maven.javadoc.plugin.version>2.9.1</org.apache.maven.plugins.maven.javadoc.plugin.version>
-		<org.apache.maven.plugins.maven.gpg.plugin.version>1.6</org.apache.maven.plugins.maven.gpg.plugin.version>
 	</properties>
 
 	<build>
@@ -53,25 +52,6 @@
 						<goals>
 							<goal>jar</goal>
 						</goals>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-gpg-plugin</artifactId>
-				<version>${org.apache.maven.plugins.maven.gpg.plugin.version}</version>
-				<executions>
-					<execution>
-						<id>sign-artifacts</id>
-						<phase>verify</phase>
-						<goals>
-							<goal>sign</goal>
-						</goals>
-						<configuration>
-							<executable>${gpg.bin.filepath}</executable>
-							<keyname>${gpg.keyname}</keyname>
-							<passphraseServerId>${gpg.keyname}</passphraseServerId>
-						</configuration>
 					</execution>
 				</executions>
 			</plugin>
