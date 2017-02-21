@@ -8,7 +8,7 @@
 	<packaging>jar</packaging>
 
 	<name>ats-expectj</name>
-	<description></description>
+	<description>ExpectJ patched by AXWAY ATS Team</description>
 	<url>https://github.com/Axway/expectj</url>
 
 	<licenses>
@@ -99,5 +99,38 @@
 		<developerConnection>scm:git:git@github.com:Axway/expectj.git</developerConnection>
 		<url>https://github.com/Axway/expectj</url>
 	</scm>
+
+	<developers>
+		<developer>
+			<name>Angel Todorov</name>
+			<email>atodorov@axway.com</email>
+			<organization>Axway</organization>
+			<organizationUrl>http://www.axway.com</organizationUrl>
+		</developer>
+		<developer>
+			<name>Nikolay Gogovski</name>
+			<email>ngogovski@axway.com</email>
+			<organization>Axway</organization>
+			<organizationUrl>http://www.axway.com</organizationUrl>
+		</developer>
+		<developer>
+			<name>Svilen Dikov</name>
+			<email>sdikov@axway.com</email>
+			<organization>Axway</organization>
+			<organizationUrl>http://www.axway.com</organizationUrl>
+		</developer>
+		<developer>
+			<name>Radoslav Kostadinov</name>
+			<email>rkostadinov@axway.com</email>
+			<organization>Axway</organization>
+			<organizationUrl>http://www.axway.com</organizationUrl>
+		</developer>
+		<developer>
+			<name>Dragoslav Slaveykov</name>
+			<email>dslaveykov@axway.com</email>
+			<organization>Axway</organization>
+			<organizationUrl>http://www.axway.com</organizationUrl>
+		</developer>
+	</developers>
 
 </project>
