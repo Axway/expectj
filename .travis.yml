@@ -7,8 +7,8 @@ script:
 notifications:
   email:
     recipients:
-      - dragodr93@gmail.com
-    on_success: always
+      - group.ats.team@axway.com
+    on_success: change
     on_failure: always
 env:
    global:
