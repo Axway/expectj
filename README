@@ -9,3 +9,5 @@ To generate more up-to-date documentation now that you have the source
 code, do "mvn site" and open target/site/index.html in your favorite
 browser.  The documentation front page is generated from
 site/apt/index.apt.
+
+Note: This repository contains some modified ExpectJ classes, that are used by Axway ATS Framework project.
