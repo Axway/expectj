@@ -514,17 +514,32 @@ public class Spawn {
 
         return slave.getCurrentStandardErrContents();
     }
+    
+    public int expectAny ( List<String> patterns,
+                           boolean isRegex,
+                           long timeout ) throws IOException, ExpectJException {
+        
+        return expectAny( patterns, isRegex, timeout, stdoutSelector );
+        
+    }
+    
+    public int expectErrAny ( List<String> patterns,
+                              boolean isRegex,
+                              long timeout ) throws IOException, ExpectJException {
+        
+        return expectAny( patterns, isRegex, timeout, stderrSelector );
+        
+    }
 
-    public int expectAny(
+    private int expectAny(
                           List<String> patterns,
                           boolean isRegex,
-                          long timeout ) throws IOException, ExpectJException {
+                          long timeout,
+                          Selector selector ) throws IOException, ExpectJException {
 
         if( timeout < -1 ) {
             throw new IllegalArgumentException( "Timeout must be >= -1, was " + timeout );
         }
-
-        Selector selector = stdoutSelector;
 
         // If this cast fails somebody gave us the wrong selector.
         Pipe.SourceChannel readMe = ( Pipe.SourceChannel ) ( selector.keys().iterator().next() ).channel();
@@ -576,17 +591,32 @@ public class Spawn {
             }
         }
     }
-
-    public void expectAll(
-                           List<String> patterns,
+    
+    public void expectAll( List<String> patterns,
                            boolean isRegex,
                            long timeout ) throws IOException, TimeoutException {
+         
+         expectAll( patterns, isRegex, timeout, stdoutSelector );
+         
+     }
+     
+     public void expectErrAll( List<String> patterns,
+                               boolean isRegex,
+                               long timeout ) throws IOException, TimeoutException {
+          
+          expectAll( patterns, isRegex, timeout, stderrSelector );
+          
+      }
+
+    private void expectAll(
+                           List<String> patterns,
+                           boolean isRegex,
+                           long timeout,
+                           Selector selector ) throws IOException, TimeoutException {
 
         if( timeout < -1 ) {
             throw new IllegalArgumentException( "Timeout must be >= -1, was " + timeout );
         }
-
-        Selector selector = stdoutSelector;
 
         // If this cast fails somebody gave us the wrong selector.
         Pipe.SourceChannel readMe = ( Pipe.SourceChannel ) ( selector.keys().iterator().next() ).channel();
