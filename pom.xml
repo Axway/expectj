@@ -1,93 +1,106 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
 
-	<groupId>com.axway.ats.expectj</groupId>
-	<artifactId>ats-expectj</artifactId>
-	<version>2.0.9-SNAPSHOT</version>
-	<packaging>jar</packaging>
+    <groupId>com.axway.ats.expectj</groupId>
+    <artifactId>ats-expectj</artifactId>
+    <version>2.0.10-SNAPSHOT</version>
+    <packaging>jar</packaging>
 
-	<name>ats-expectj</name>
-	<description>ExpectJ patched by AXWAY ATS Team</description>
-	<url>https://github.com/Axway/expectj</url>
+    <name>ats-expectj</name>
+    <description>ExpectJ patched by AXWAY ATS Team</description>
+    <url>https://github.com/Axway/expectj</url>
 
-	<licenses>
-		<license>
-			<name>GNU LESSER GENERAL PUBLIC LICENSE, Version 2.1</name>
-			<url>https://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt</url>
-		</license>
-	</licenses>
+    <licenses>
+        <license>
+            <name>GNU LESSER GENERAL PUBLIC LICENSE, Version 2.1</name>
+            <url>https://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt</url>
+        </license>
+    </licenses>
 
 
-	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<log4j.version>1.2.17</log4j.version>
-		<com.jcraft.jsch.version>0.1.50</com.jcraft.jsch.version>
-		<org.apache.maven.plugins.maven.source.plugin.version>2.2.1</org.apache.maven.plugins.maven.source.plugin.version>
-		<org.apache.maven.plugins.maven.javadoc.plugin.version>2.9.1</org.apache.maven.plugins.maven.javadoc.plugin.version>
-		<org.sonatype.plugins.nexus.staging.maven.plugin.version>1.6.7</org.sonatype.plugins.nexus.staging.maven.plugin.version>
-		<maven.release.plugin.version>2.5.3</maven.release.plugin.version>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <log4j.version>1.2.19</log4j.version>
+        <com.jcraft.jsch.version>0.1.55</com.jcraft.jsch.version>
+        <org.apache.maven.plugins.maven.source.plugin.version>2.2.1</org.apache.maven.plugins.maven.source.plugin.version>
+        <org.apache.maven.plugins.maven.javadoc.plugin.version>2.9.1</org.apache.maven.plugins.maven.javadoc.plugin.version>
+        <org.sonatype.plugins.nexus.staging.maven.plugin.version>1.6.7</org.sonatype.plugins.nexus.staging.maven.plugin.version>
+        <maven.release.plugin.version>2.5.3</maven.release.plugin.version>
         <org.apache.maven.scm>1.8.1</org.apache.maven.scm>
         <!-- Maven GPG plugin properties -->
         <maven.gpg.plugin.version>1.6</maven.gpg.plugin.version>
         <gpg.skip>true</gpg.skip> <!-- skip maven gpg execution. Enable via -Dgpg.skip=false -->
         <gpg.executable>gpg2</gpg.executable>
-	</properties>
+    </properties>
 
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-source-plugin</artifactId>
-				<version>${org.apache.maven.plugins.maven.source.plugin.version}</version>
-				<executions>
-					<execution>
-						<id>attach-sources</id>
-						<goals>
-							<goal>jar-no-fork</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-javadoc-plugin</artifactId>
-				<version>${org.apache.maven.plugins.maven.javadoc.plugin.version}</version>
-				<executions>
-					<execution>
-						<id>attach-javadocs</id>
-						<goals>
-							<goal>jar</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
-				<groupId>org.sonatype.plugins</groupId>
-				<artifactId>nexus-staging-maven-plugin</artifactId>
-				<version>${org.sonatype.plugins.nexus.staging.maven.plugin.version}</version>
-				<extensions>true</extensions>
-				<configuration>
-					<serverId>ossrh</serverId>
-					<nexusUrl>https://oss.sonatype.org/</nexusUrl>
-					<autoReleaseAfterClose>false</autoReleaseAfterClose>
-				</configuration>
-			</plugin>
-			<!-- Used only when deploying new release version -->
-           <plugin>
-               <groupId>org.apache.maven.plugins</groupId>
-               <artifactId>maven-gpg-plugin</artifactId>
-               <version>${maven.gpg.plugin.version}</version>
-               <executions>
-                   <execution>
-                       <id>sign-artifacts</id>
-                       <phase>verify</phase>
-                       <goals>
-                           <goal>sign</goal>
-                       </goals>
-                   </execution>
-               </executions>
-           </plugin>
-           <plugin>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.1</version>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                    <encoding>UTF-8</encoding>
+                    <showDeprecation>true</showDeprecation>
+                    <!--<release>${java.version}</release> release argument since Java 9 -->
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>${org.apache.maven.plugins.maven.source.plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar-no-fork</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>${org.apache.maven.plugins.maven.javadoc.plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.sonatype.plugins</groupId>
+                <artifactId>nexus-staging-maven-plugin</artifactId>
+                <version>${org.sonatype.plugins.nexus.staging.maven.plugin.version}</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <serverId>ossrh</serverId>
+                    <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+                    <autoReleaseAfterClose>false</autoReleaseAfterClose>
+                </configuration>
+            </plugin>
+            <!-- Used only when deploying new release version -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-gpg-plugin</artifactId>
+                <version>${maven.gpg.plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>sign-artifacts</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>sign</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
                 <artifactId>maven-release-plugin</artifactId>
                 <version>${maven.release.plugin.version}</version>
                 <dependencies>
@@ -98,71 +111,73 @@
                     </dependency>
                 </dependencies>
             </plugin>
-		</plugins>
-	</build>
+        </plugins>
+    </build>
 
-	<dependencies>
-		<dependency>
-			<groupId>log4j</groupId>
-			<artifactId>log4j</artifactId>
-			<version>${log4j.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>com.jcraft</groupId>
-			<artifactId>jsch</artifactId>
-			<version>${com.jcraft.jsch.version}</version>
-		</dependency>
-	</dependencies>
+    <dependencies>
+        <dependency>
+           <!-- <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>-->
+            <groupId>ch.qos.reload4j</groupId>
+            <artifactId>reload4j</artifactId>
+            <version>${log4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.jcraft</groupId>
+            <artifactId>jsch</artifactId>
+            <version>${com.jcraft.jsch.version}</version>
+        </dependency>
+    </dependencies>
 
-	<distributionManagement>
-		<snapshotRepository>
-			<id>ossrh</id>
-			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
-		</snapshotRepository>
-		<repository>
-			<id>ossrh</id>
-			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
-		</repository>
-	</distributionManagement>
+    <distributionManagement>
+        <snapshotRepository>
+            <id>ossrh</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
+        <repository>
+            <id>ossrh</id>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+        </repository>
+    </distributionManagement>
 
-	<scm>
-		<connection>scm:git:https://github.com/Axway/expectj.git</connection>
-		<developerConnection>scm:git:git@github.com:Axway/expectj.git</developerConnection>
-		<url>https://github.com/Axway/expectj</url>
-	  <tag>HEAD</tag>
-  </scm>
+    <scm>
+        <connection>scm:git:https://github.com/Axway/expectj.git</connection>
+        <developerConnection>scm:git:git@github.com:Axway/expectj.git</developerConnection>
+        <url>https://github.com/Axway/expectj</url>
+        <tag>HEAD</tag>
+    </scm>
 
-	<developers>
-		<developer>
-			<name>Angel Todorov</name>
-			<email>atodorov@axway.com</email>
-			<organization>Axway</organization>
-			<organizationUrl>http://www.axway.com</organizationUrl>
-		</developer>
-		<developer>
-			<name>Nikolay Gogovski</name>
-			<email>ngogovski@axway.com</email>
-			<organization>Axway</organization>
-			<organizationUrl>http://www.axway.com</organizationUrl>
-		</developer>
-		<developer>
-			<name>Svilen Dikov</name>
-			<email>sdikov@axway.com</email>
-			<organization>Axway</organization>
-			<organizationUrl>http://www.axway.com</organizationUrl>
-		</developer>
-		<developer>
-			<name>Radoslav Kostadinov</name>
-			<email>rkostadinov@axway.com</email>
-			<organization>Axway</organization>
-			<organizationUrl>http://www.axway.com</organizationUrl>
-		</developer>
-		<developer>
-			<name>Dragoslav Slaveykov</name>
-			<email>dslaveykov@axway.com</email>
-			<organization>Axway</organization>
-			<organizationUrl>http://www.axway.com</organizationUrl>
-		</developer>
-	</developers>
+    <developers>
+        <developer>
+            <name>Angel Todorov</name>
+            <email>atodorov@axway.com</email>
+            <organization>Axway</organization>
+            <organizationUrl>http://www.axway.com</organizationUrl>
+        </developer>
+        <developer>
+            <name>Nikolay Gogovski</name>
+            <email>ngogovski@axway.com</email>
+            <organization>Axway</organization>
+            <organizationUrl>http://www.axway.com</organizationUrl>
+        </developer>
+        <developer>
+            <name>Svilen Dikov</name>
+            <email>sdikov@axway.com</email>
+            <organization>Axway</organization>
+            <organizationUrl>http://www.axway.com</organizationUrl>
+        </developer>
+        <developer>
+            <name>Radoslav Kostadinov</name>
+            <email>rkostadinov@axway.com</email>
+            <organization>Axway</organization>
+            <organizationUrl>http://www.axway.com</organizationUrl>
+        </developer>
+        <developer>
+            <name>Dragoslav Slaveykov</name>
+            <email>dslaveykov@axway.com</email>
+            <organization>Axway</organization>
+            <organizationUrl>http://www.axway.com</organizationUrl>
+        </developer>
+    </developers>
 
 </project>
